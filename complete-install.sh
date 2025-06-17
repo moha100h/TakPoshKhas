@@ -2,7 +2,7 @@
 
 # تک پوش خاص - اسکریپت نصب کامل خودکار
 # سیستم مدیریت برند تی‌شرت فارسی
-# استفاده: bash <(curl -Ls https://raw.githubusercontent.com/tek-push-khas/install/main/complete-install.sh)
+# استفاده: bash <(curl -Ls https://raw.githubusercontent.com/moha100h/tek-push-khas-install/main/complete-install.sh)
 
 set -e
 

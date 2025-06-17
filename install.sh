@@ -2,13 +2,13 @@
 
 # تک پوش خاص - اسکریپت نصب خودکار
 # سیستم مدیریت برند تی‌شرت فارسی
-# استفاده: bash <(curl -Ls https://raw.githubusercontent.com/tek-push-khas/install/main/install.sh)
+# استفاده: bash <(curl -Ls https://raw.githubusercontent.com/moha100h/tek-push-khas-install/main/install.sh)
 
 set -e
 
 # نسخه اسکریپت
 SCRIPT_VERSION="1.0.0"
-REPO_URL="https://github.com/tek-push-khas/website.git"
+REPO_URL="https://github.com/moha100h/tek-push-khas.git"
 
 # Colors for output
 RED='\033[0;31m'

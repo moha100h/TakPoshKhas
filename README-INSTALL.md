@@ -7,7 +7,7 @@
 برای نصب خودکار سیستم روی سرور خود، دستور زیر را اجرا کنید:
 
 ```bash
-bash <(curl -Ls https://raw.githubusercontent.com/tek-push-khas/install/main/install.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/moha100h/tek-push-khas-install/main/install.sh)
 ```
 
 ## پیش‌نیازها
@@ -43,7 +43,7 @@ ssh username@your-server-ip
 ### 2. اجرای نصب
 ```bash
 # دانلود و اجرای اسکریپت نصب
-bash <(curl -Ls https://raw.githubusercontent.com/tek-push-khas/install/main/install.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/moha100h/tek-push-khas-install/main/install.sh)
 ```
 
 ### 3. پیکربندی اولیه
@@ -219,7 +219,7 @@ sudo chmod -R 755 /opt/tek-push-khas/uploads/
 ### به‌روزرسانی خودکار
 ```bash
 # دانلود و اجرای اسکریپت به‌روزرسانی
-bash <(curl -Ls https://raw.githubusercontent.com/tek-push-khas/install/main/update.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/moha100h/tek-push-khas-install/main/update.sh)
 ```
 
 ### به‌روزرسانی دستی
