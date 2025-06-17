@@ -114,7 +114,7 @@ export class DatabaseStorage implements IStorage {
       .select()
       .from(tshirtImages)
       .where(eq(tshirtImages.isActive, true))
-      .orderBy(tshirtImages.order);
+      .orderBy(tshirtImages.displayOrder);
   }
 
   async getAllTshirtImages(): Promise<TshirtImage[]> {
