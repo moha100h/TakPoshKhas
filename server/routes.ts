@@ -1,7 +1,9 @@
-import express, { type Express } from "express";
-import { createServer, type Server } from "http";
-import { storage } from "./storage";
-import { setupAuth, requireAuth, requireAdmin } from "./auth";
+import express from "express";
+import type { Express } from "express";
+import { createServer } from "http";
+import type { Server } from "http";
+import { storage } from "./storage.js";
+import { setupAuth, requireAuth, requireAdmin } from "./auth.js";
 import multer from "multer";
 import sharp from "sharp";
 import path from "path";
