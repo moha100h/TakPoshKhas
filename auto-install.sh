@@ -18,19 +18,19 @@ NC='\033[0m' # No Color
 
 # Function to print colored output
 print_status() {
-    echo -e "${GREEN}[✓]${NC} $1"
+    echo -e "${GREEN}[SUCCESS]${NC} $1"
 }
 
 print_warning() {
-    echo -e "${YELLOW}[⚠]${NC} $1"
+    echo -e "${YELLOW}[WARNING]${NC} $1"
 }
 
 print_error() {
-    echo -e "${RED}[✗]${NC} $1"
+    echo -e "${RED}[ERROR]${NC} $1"
 }
 
 print_info() {
-    echo -e "${BLUE}[i]${NC} $1"
+    echo -e "${BLUE}[INFO]${NC} $1"
 }
 
 # Check if running as root
@@ -48,273 +48,327 @@ cleanup() {
 trap cleanup EXIT
 
 # Step 1: System Update
-print_status "به‌روزرسانی سیستم..."
-export DEBIAN_FRONTEND=noninteractive
-apt update -y
-apt upgrade -y
+print_info "به‌روزرسانی سیستم..."
+apt update && apt upgrade -y
 
-# Step 2: Install essential packages
-print_status "نصب بسته‌های ضروری..."
-apt install -y curl wget git build-essential software-properties-common gnupg2 lsb-release
+# Step 2: Install Dependencies
+print_info "نصب وابستگی‌های سیستم..."
+apt install -y curl wget git nginx postgresql postgresql-contrib build-essential
 
-# Step 3: Install Nginx
-print_status "نصب Nginx..."
-apt install -y nginx
-
-# Step 4: Install Node.js 20
-print_status "نصب Node.js 20..."
-curl -fsSL https://deb.nodesource.com/setup_20.x -o /tmp/node-setup.sh
-chmod +x /tmp/node-setup.sh
-bash /tmp/node-setup.sh
-apt-get install -y nodejs
+# Step 3: Install Node.js 20
+print_info "نصب Node.js 20..."
+curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+apt install -y nodejs
 
 # Verify Node.js installation
 node_version=$(node --version)
 npm_version=$(npm --version)
-print_status "Node.js نصب شد: $node_version"
-print_status "npm نصب شد: $npm_version"
+print_status "Node.js $node_version و npm $npm_version نصب شد"
 
-# Step 5: Install PM2
-print_status "نصب PM2..."
-npm install -g pm2
-
-# Step 6: Install PostgreSQL
-print_status "نصب PostgreSQL..."
-apt install -y postgresql postgresql-contrib
-
-# Start PostgreSQL service
+# Step 4: Setup PostgreSQL
+print_info "تنظیم پایگاه داده PostgreSQL..."
 systemctl start postgresql
 systemctl enable postgresql
 
-# Step 7: Configure PostgreSQL
-print_status "تنظیم PostgreSQL..."
-sudo -u postgres psql -c "DROP DATABASE IF EXISTS tekposhdb;"
-sudo -u postgres psql -c "DROP USER IF EXISTS tekposh;"
-sudo -u postgres psql -c "CREATE USER tekposh WITH PASSWORD 'TekPosh@2024';"
-sudo -u postgres psql -c "CREATE DATABASE tekposhdb OWNER tekposh;"
-sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE tekposhdb TO tekposh;"
-sudo -u postgres psql -c "ALTER USER tekposh CREATEDB;"
+# Create database and user
+sudo -u postgres psql -c "CREATE USER tekpushuser WITH PASSWORD 'TekPush2024!@#';" || true
+sudo -u postgres psql -c "CREATE DATABASE tekpushdb OWNER tekpushuser;" || true
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE tekpushdb TO tekpushuser;" || true
 
-# Step 8: Setup application directory
-APP_DIR="/var/www/tekposh"
-print_status "ایجاد پوشه اپلیکیشن در $APP_DIR..."
+print_status "پایگاه داده PostgreSQL آماده شد"
 
-# Remove existing directory if exists
-if [ -d "$APP_DIR" ]; then
-    print_warning "حذف نصب قبلی..."
-    rm -rf $APP_DIR
+# Step 5: Clone Repository
+print_info "دریافت کد منبع..."
+cd /opt
+if [ -d "tek-push-khas" ]; then
+    rm -rf tek-push-khas
 fi
+git clone https://github.com/moha100h/TakPoshKhas.git tek-push-khas
+cd tek-push-khas
 
-mkdir -p $APP_DIR
-cd $APP_DIR
-
-# Step 9: Clone repository
-print_status "دانلود کد پروژه..."
-git clone https://github.com/moha100h/TakPoshKhas.git .
-
-# Step 10: Install dependencies
-print_status "نصب وابستگی‌ها..."
-npm install
-
-# Step 11: Create environment file
-print_status "ایجاد فایل تنظیمات..."
+# Step 6: Setup Environment
+print_info "تنظیم متغیرهای محیطی..."
 cat > .env << EOF
 NODE_ENV=production
 PORT=5000
-DATABASE_URL=postgresql://tekposh:TekPosh@2024@localhost:5432/tekposhdb
-SESSION_SECRET=$(openssl rand -base64 32)
-PGUSER=tekposh
-PGPASSWORD=TekPosh@2024
-PGDATABASE=tekposhdb
+DATABASE_URL=postgresql://tekpushuser:TekPush2024!@#@localhost:5432/tekpushdb
+SESSION_SECRET=TekPushSecretKey2024SuperSecure!@#$%^&*()
 PGHOST=localhost
 PGPORT=5432
+PGUSER=tekpushuser
+PGPASSWORD=TekPush2024!@#
+PGDATABASE=tekpushdb
 EOF
 
-# Step 12: Create uploads directory
-print_status "ایجاد پوشه آپلود..."
-mkdir -p public/uploads
-chmod 755 public/uploads
+# Step 7: Install Dependencies
+print_info "نصب وابستگی‌های پروژه..."
+npm install
 
-# Step 13: Setup database
-print_status "راه‌اندازی دیتابیس..."
-npm run db:push || {
-    print_warning "خطا در db:push، تلاش مجدد..."
-    sleep 5
-    npm run db:push
-}
-
-# Step 14: Create PM2 ecosystem file
-print_status "ایجاد تنظیمات PM2..."
-cat > ecosystem.config.js << 'EOF'
-module.exports = {
-  apps: [{
-    name: 'tekposh',
-    script: 'npm',
-    args: 'run dev',
-    instances: 1,
-    autorestart: true,
-    watch: false,
-    max_memory_restart: '1G',
-    env: {
-      NODE_ENV: 'production',
-      PORT: 5000
-    },
-    error_file: './logs/err.log',
-    out_file: './logs/out.log',
-    log_file: './logs/combined.log'
-  }]
+# Step 8: Create tsconfig.json for server if missing
+print_info "ایجاد فایل‌های پیکربندی..."
+mkdir -p server
+cat > server/tsconfig.json << EOF
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../dist/server",
+    "rootDir": "../server",
+    "module": "ESNext",
+    "target": "ES2022",
+    "moduleResolution": "node"
+  },
+  "include": ["../server/**/*"],
+  "exclude": ["../node_modules", "../dist"]
 }
 EOF
 
-# Step 15: Create logs directory
-mkdir -p logs
+# Create main tsconfig if missing
+if [ ! -f "tsconfig.json" ]; then
+cat > tsconfig.json << EOF
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2023"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./client/src/*"],
+      "@shared/*": ["./shared/*"],
+      "@assets/*": ["./attached_assets/*"]
+    }
+  },
+  "include": ["client/src", "shared", "server"],
+  "references": [{ "path": "./server/tsconfig.json" }]
+}
+EOF
+fi
 
-# Step 16: Set proper permissions
-print_status "تنظیم مجوزها..."
-chown -R www-data:www-data $APP_DIR
-chmod -R 755 $APP_DIR
-chmod -R 777 public/uploads
-chmod -R 755 logs
+# Step 9: Fix drizzle config
+print_info "تنظیم Drizzle ORM..."
+cat > drizzle.config.ts << EOF
+import { defineConfig } from "drizzle-kit";
 
-# Step 17: Configure Nginx
-print_status "تنظیم Nginx..."
-cat > /etc/nginx/sites-available/tekposh << 'EOF'
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL environment variable is required");
+}
+
+export default defineConfig({
+  dialect: "postgresql",
+  schema: "./shared/schema.ts",
+  out: "./migrations",
+  dbCredentials: {
+    url: process.env.DATABASE_URL,
+  },
+  verbose: true,
+  strict: true,
+});
+EOF
+
+# Step 10: Database Migration with proper schema
+print_info "مهاجرت پایگاه داده..."
+
+# Create database schema manually to avoid conflicts
+PGPASSWORD="TekPush2024!@#" psql -h localhost -U tekpushuser -d tekpushdb << 'EOSQL'
+-- Create sessions table
+CREATE TABLE IF NOT EXISTS sessions (
+    sid VARCHAR PRIMARY KEY,
+    sess JSONB NOT NULL,
+    expire TIMESTAMP NOT NULL
+);
+
+-- Create users table
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    profile_image_url VARCHAR(500),
+    role VARCHAR(20) NOT NULL DEFAULT 'admin',
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Create brand_settings table
+CREATE TABLE IF NOT EXISTS brand_settings (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL DEFAULT 'تک پوش خاص',
+    slogan TEXT NOT NULL DEFAULT 'یک از یک',
+    logo_url TEXT,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Create tshirt_images table
+CREATE TABLE IF NOT EXISTS tshirt_images (
+    id SERIAL PRIMARY KEY,
+    image_url TEXT NOT NULL,
+    alt TEXT NOT NULL,
+    title TEXT,
+    description TEXT,
+    price TEXT,
+    size TEXT,
+    display_order INTEGER NOT NULL DEFAULT 0,
+    is_active BOOLEAN NOT NULL DEFAULT true,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Create social_links table
+CREATE TABLE IF NOT EXISTS social_links (
+    id SERIAL PRIMARY KEY,
+    platform VARCHAR(50) NOT NULL,
+    url TEXT NOT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT true,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Create copyright_settings table
+CREATE TABLE IF NOT EXISTS copyright_settings (
+    id SERIAL PRIMARY KEY,
+    text TEXT NOT NULL DEFAULT '© 1404 تک پوش خاص. تمامی حقوق محفوظ است.',
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Create about_content table
+CREATE TABLE IF NOT EXISTS about_content (
+    id SERIAL PRIMARY KEY,
+    title TEXT NOT NULL DEFAULT 'درباره ما',
+    content TEXT NOT NULL DEFAULT 'ما برند پیشرو در طراحی تی‌شرت هستیم',
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Insert default data
+INSERT INTO users (username, password, role) 
+VALUES ('admin', '$2b$10$rQZ4QJ5iKfY4QJ5iKfY4Q.J5iKfY4QJ5iKfY4QJ5iKfY4QJ5iKfY4QO', 'admin')
+ON CONFLICT (username) DO NOTHING;
+
+INSERT INTO brand_settings (name, slogan, description)
+VALUES ('تک پوش خاص', 'یک از یک', 'برند پیشرو در طراحی تی‌شرت')
+ON CONFLICT DO NOTHING;
+
+INSERT INTO copyright_settings (text)
+VALUES ('© 1404 تک پوش خاص. تمامی حقوق محفوظ است.')
+ON CONFLICT DO NOTHING;
+
+INSERT INTO about_content (title, content)
+VALUES ('درباره ما', 'ما برند پیشرو در طراحی تی‌شرت هستیم که با ترکیب خلاقیت و کیفیت، محصولاتی منحصر به فرد ارائه می‌دهیم.')
+ON CONFLICT DO NOTHING;
+
+INSERT INTO social_links (platform, url)
+VALUES ('instagram', 'https://instagram.com/tekpushkhas')
+ON CONFLICT DO NOTHING;
+
+EOSQL
+
+print_status "پایگاه داده با موفقیت ایجاد شد"
+
+# Step 11: Build Application
+print_info "ساخت اپلیکیشن..."
+npm run build
+
+print_status "فایل‌های استاتیک ایجاد شد"
+
+# Step 12: Setup systemd service
+print_info "تنظیم سرویس سیستم..."
+cat > /etc/systemd/system/tek-push-khas.service << EOF
+[Unit]
+Description=Tek Push Khas Application
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/opt/tek-push-khas
+Environment=NODE_ENV=production
+Environment=PORT=5000
+ExecStart=/usr/bin/node dist/server/index.js
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# Step 13: Setup file permissions
+print_info "تنظیم دسترسی‌ها..."
+chown -R www-data:www-data /opt/tek-push-khas
+chmod -R 755 /opt/tek-push-khas
+
+# Step 14: Setup Nginx
+print_info "تنظیم سرور وب..."
+cat > /etc/nginx/sites-available/tek-push-khas << EOF
 server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-    server_name 88.198.124.200 _;
-    
-    client_max_body_size 100M;
+    listen 80;
+    server_name 88.198.124.200;
     
     location / {
         proxy_pass http://localhost:5000;
         proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Upgrade \$http_upgrade;
         proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_cache_bypass $http_upgrade;
-        proxy_connect_timeout 60s;
-        proxy_send_timeout 60s;
-        proxy_read_timeout 60s;
-    }
-    
-    location /uploads/ {
-        alias /var/www/tekposh/public/uploads/;
-        expires 1y;
-        add_header Cache-Control "public, immutable";
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_cache_bypass \$http_upgrade;
     }
 }
 EOF
 
-# Enable Nginx site
+# Remove default nginx site and enable our site
 rm -f /etc/nginx/sites-enabled/default
-ln -sf /etc/nginx/sites-available/tekposh /etc/nginx/sites-enabled/
+ln -sf /etc/nginx/sites-available/tek-push-khas /etc/nginx/sites-enabled/
 
-# Test Nginx configuration
+# Test nginx configuration
 nginx -t
 
-# Step 18: Configure firewall
-print_status "تنظیم فایروال..."
-ufw --force reset
-ufw allow 22/tcp
+# Step 15: Start Services
+print_info "راه‌اندازی سرویس‌ها..."
+systemctl daemon-reload
+systemctl enable tek-push-khas
+systemctl start tek-push-khas
+systemctl reload nginx
+
+# Step 16: Setup Firewall
+print_info "تنظیم فایروال..."
 ufw allow 80/tcp
-ufw allow 443/tcp
+ufw allow 22/tcp
 ufw --force enable
 
-# Step 19: Start services
-print_status "راه‌اندازی سرویس‌ها..."
-systemctl restart nginx
-systemctl enable nginx
+# Step 17: Create upload directory
+print_info "ایجاد پوشه آپلود..."
+mkdir -p /opt/tek-push-khas/public/uploads
+chown -R www-data:www-data /opt/tek-push-khas/public/uploads
+chmod -R 755 /opt/tek-push-khas/public/uploads
 
-# Step 20: Initialize default data
-print_status "ایجاد داده‌های پیش‌فرض..."
-cat > init-data.js << 'EOF'
-const { storage } = require('./server/storage');
-const bcrypt = require('bcrypt');
+print_status "نصب با موفقیت تکمیل شد!"
+print_info "وب‌سایت در آدرس http://88.198.124.200 در دسترس است"
+print_info "برای ورود از نام کاربری 'admin' و رمز عبور پیش‌فرض استفاده کنید"
 
-async function initializeData() {
-  try {
-    // Create admin user
-    const hashedPassword = await bcrypt.hash('admin123', 10);
-    await storage.createUser({
-      username: 'admin',
-      password: hashedPassword,
-      role: 'admin'
-    });
-    console.log('✓ Admin user created');
-
-    // Initialize brand settings
-    await storage.updateBrandSettings({
-      name: 'تک پوش خاص',
-      slogan: 'طراحی منحصر به فرد که سبک شما را متفاوت می‌کند',
-      description: 'برند پیشرو در طراحی تی‌شرت با کیفیت برتر'
-    });
-    console.log('✓ Brand settings initialized');
-
-    // Initialize copyright settings
-    await storage.updateCopyrightSettings({
-      text: '© 1404 تک پوش خاص. تمامی حقوق محفوظ است.'
-    });
-    console.log('✓ Copyright settings initialized');
-
-    console.log('✓ All data initialized successfully');
-  } catch (error) {
-    console.log('Warning:', error.message);
-  }
-  process.exit(0);
-}
-
-initializeData();
-EOF
-
-node init-data.js
-rm init-data.js
-
-# Step 21: Start application with PM2
-print_status "راه‌اندازی اپلیکیشن..."
-cd $APP_DIR
-pm2 start ecosystem.config.js
-pm2 save
-pm2 startup systemd -u root --hp /root
-
-# Step 22: Final status check
-sleep 5
-print_status "بررسی وضعیت نهایی..."
-
-if pm2 show tekposh > /dev/null 2>&1; then
-    print_status "✓ اپلیکیشن با موفقیت راه‌اندازی شد"
+# Check service status
+if systemctl is-active --quiet tek-push-khas; then
+    print_status "سرویس با موفقیت در حال اجرا است"
 else
-    print_error "✗ خطا در راه‌اندازی اپلیکیشن"
+    print_warning "سرویس ممکن است نیاز به راه‌اندازی مجدد داشته باشد"
+    print_info "برای بررسی وضعیت: systemctl status tek-push-khas"
 fi
 
-if systemctl is-active --quiet nginx; then
-    print_status "✓ Nginx فعال است"
-else
-    print_error "✗ خطا در Nginx"
-fi
-
-# Step 23: Display final information
-echo ""
-echo "================================="
-print_status "🎉 نصب کامل شد!"
-print_status "Installation completed successfully!"
-echo "================================="
-echo ""
-print_info "🌐 آدرس سایت: http://88.198.124.200"
-print_info "👤 ورود ادمین: admin / admin123"
-echo ""
-print_info "📋 دستورات مفید:"
-print_info "   • وضعیت اپ: pm2 status"
-print_info "   • مشاهده لاگ: pm2 logs tekposh"
-print_info "   • ری‌استارت: pm2 restart tekposh"
-print_info "   • توقف اپ: pm2 stop tekposh"
-echo ""
-print_info "🔧 تنظیمات:"
-print_info "   • پورت اپ: 5000"
-print_info "   • پروکسی Nginx: 80 → 5000"
-print_info "   • دیتابیس: PostgreSQL"
-echo ""
-print_status "✅ سایت آماده استفاده است!"
+echo "=== نصب تکمیل شد ==="

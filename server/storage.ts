@@ -27,7 +27,7 @@ import { pool } from "./db";
 // Interface for storage operations
 export interface IStorage {
   // Session store
-  sessionStore: session.SessionStore;
+  sessionStore: any;
   
   // User operations for username/password auth
   getUser(id: number): Promise<User | undefined>;
