@@ -413,19 +413,24 @@ build_application() {
     print_status "نصب وابستگی‌ها و ساخت پروژه..."
     cd "$APP_DIR"
     
+    # Install dependencies
     sudo -u "$SERVICE_USER" npm install --production=false >/dev/null 2>&1
+    
+    # Build frontend
     sudo -u "$SERVICE_USER" npm run build >/dev/null 2>&1 || {
-        print_warning "خطا در ساخت، ایجاد فایل‌های پیش‌فرض..."
+        print_warning "خطا در ساخت فرانت‌اند، ایجاد فایل‌های پیش‌فرض..."
         mkdir -p dist
-        cp client/index.html dist/
-        echo "console.log('تک پوش خاص');" > dist/main.js
+        if [ -f "client/index.html" ]; then
+            cp client/index.html dist/
+        else
+            echo '<!DOCTYPE html><html><head><title>تک پوش خاص</title></head><body><h1>تک پوش خاص</h1></body></html>' > dist/index.html
+        fi
+        echo "console.log('تک پوش خاص - سرور آماده');" > dist/main.js
     }
     
-    # Compile TypeScript server
-    sudo -u "$SERVICE_USER" npx tsc server/index.ts --outDir server --target ES2020 --module commonjs 2>/dev/null || {
-        # Convert TS to JS manually
-        sed 's/import /const { /g; s/ from / } = require(/g; s/;$/);/g' server/index.ts > server/index.js
-    }
+    # Setup server for production
+    # Use tsx directly instead of compiling to JS
+    print_status "تنظیم سرور برای تولید..."
 }
 
 # Function to create systemd service
@@ -443,7 +448,7 @@ User=$SERVICE_USER
 Group=$SERVICE_USER
 WorkingDirectory=$APP_DIR
 Environment=NODE_ENV=production
-ExecStart=/usr/bin/node server/index.js
+ExecStart=/usr/bin/npx tsx server/index.ts
 Restart=always
 RestartSec=5
 
