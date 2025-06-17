@@ -397,6 +397,11 @@ export default {
 EOF
 
     # Create environment file
+    # Kill any existing processes on port 3000
+    pkill -f "node.*3000" 2>/dev/null || true
+    pkill -f "tsx.*server" 2>/dev/null || true
+    sleep 2
+    
     cat > .env << EOF
 NODE_ENV=production
 PORT=3000
@@ -627,9 +632,33 @@ configure_firewall() {
     fi
 }
 
+# Function to check and kill port conflicts
+check_port_conflicts() {
+    print_status "بررسی تداخل پورت‌ها..."
+    
+    # Check port 3000
+    if netstat -tlnp 2>/dev/null | grep -q ":3000 "; then
+        print_warning "پورت 3000 در حال استفاده است، حل تداخل..."
+        fuser -k 3000/tcp 2>/dev/null || true
+        pkill -f "node.*3000" 2>/dev/null || true
+        pkill -f "tsx.*server" 2>/dev/null || true
+        sleep 3
+    fi
+    
+    # Check port 80
+    if netstat -tlnp 2>/dev/null | grep -q ":80 " && ! pgrep nginx >/dev/null; then
+        print_warning "پورت 80 در حال استفاده است، حل تداخل..."
+        fuser -k 80/tcp 2>/dev/null || true
+        sleep 2
+    fi
+}
+
 # Function to start services
 start_services() {
     print_status "راه‌اندازی سرویس‌ها..."
+    
+    # Check for port conflicts first
+    check_port_conflicts
     
     # Enable services
     systemctl enable $APP_NAME >/dev/null 2>&1
@@ -639,36 +668,64 @@ start_services() {
     systemctl start postgresql >/dev/null 2>&1
     sleep 2
     
+    # Kill any conflicting processes
+    pkill -f "node.*3000" 2>/dev/null || true
+    pkill -f "tsx.*server" 2>/dev/null || true
+    sleep 3
+    
     # Start application
     systemctl start $APP_NAME >/dev/null 2>&1
-    sleep 5
+    sleep 8
     
     # Check if app is running
     if ! systemctl is-active --quiet $APP_NAME; then
-        print_warning "خطا در راه‌اندازی اپلیکیشن، تلاش مجدد..."
-        systemctl restart $APP_NAME >/dev/null 2>&1
-        sleep 5
+        print_warning "خطا در راه‌اندازی اپلیکیشن، بررسی لاگ..."
+        journalctl -u $APP_NAME --no-pager -n 20 || true
+        
+        print_warning "تلاش مجدد..."
+        systemctl stop $APP_NAME >/dev/null 2>&1 || true
+        sleep 2
+        systemctl start $APP_NAME >/dev/null 2>&1
+        sleep 8
     fi
     
     # Start nginx
     systemctl start nginx >/dev/null 2>&1
     
-    # Final status check with health verification
-    print_status "بررسی وضعیت سرویس‌ها..."
+    # Final status check with comprehensive health verification
+    print_status "بررسی نهایی وضعیت سرویس‌ها..."
+    
+    # Wait for services to fully initialize
+    sleep 5
+    
+    # Check systemd services
     if systemctl is-active --quiet $APP_NAME && systemctl is-active --quiet nginx; then
-        # Test HTTP response
+        print_success "سرویس‌های systemd فعال هستند"
+        
+        # Test HTTP responses
         sleep 3
-        if curl -s -o /dev/null -w "%{http_code}" http://localhost:3000 | grep -q "200\|404"; then
-            print_success "تمام سرویس‌ها با موفقیت راه‌اندازی شدند"
+        APP_RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000 2>/dev/null || echo "000")
+        NGINX_RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost 2>/dev/null || echo "000")
+        
+        if [[ "$APP_RESPONSE" =~ ^[245][0-9][0-9]$ ]]; then
+            print_success "اپلیکیشن پاسخ می‌دهد (HTTP $APP_RESPONSE)"
         else
-            print_warning "سرور راه‌اندازی شده اما HTTP response مشکل دارد"
-            # Try to restart once more
+            print_warning "اپلیکیشن پاسخ نمی‌دهد، restart..."
             systemctl restart $APP_NAME >/dev/null 2>&1
-            sleep 5
+            sleep 8
+        fi
+        
+        if [[ "$NGINX_RESPONSE" =~ ^[245][0-9][0-9]$ ]]; then
+            print_success "Nginx پاسخ می‌دهد (HTTP $NGINX_RESPONSE)"
+        else
+            print_warning "Nginx مشکل دارد، restart..."
+            systemctl restart nginx >/dev/null 2>&1
+            sleep 3
         fi
     else
-        print_warning "برخی سرویس‌ها مشکل دارند"
-        systemctl status $APP_NAME --no-pager -l >/dev/null 2>&1 || true
+        print_error "سرویس‌ها فعال نیستند، بررسی لاگ..."
+        journalctl -u $APP_NAME --no-pager -n 10 2>/dev/null || true
+        journalctl -u nginx --no-pager -n 5 2>/dev/null || true
     fi
 }
 
