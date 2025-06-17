@@ -12,7 +12,7 @@ import {
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-// Session storage table - required for Replit Auth
+// Session storage table
 export const sessions = pgTable(
   "sessions",
   {
@@ -44,6 +44,7 @@ export const brandSettings = pgTable("brand_settings", {
   name: text("name").notNull().default("تک پوش خاص"),
   slogan: text("slogan").notNull().default("یک از یک"),
   logoUrl: text("logo_url"),
+  description: text("description"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -63,10 +64,10 @@ export const tshirtImages = pgTable("tshirt_images", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-// Social media links table
+// Social links table
 export const socialLinks = pgTable("social_links", {
   id: serial("id").primaryKey(),
-  platform: text("platform").notNull(), // instagram, telegram, tiktok, youtube
+  platform: varchar("platform", { length: 50 }).notNull(),
   url: text("url").notNull(),
   isActive: boolean("is_active").notNull().default(true),
   createdAt: timestamp("created_at").defaultNow(),
@@ -76,28 +77,21 @@ export const socialLinks = pgTable("social_links", {
 // Copyright settings table
 export const copyrightSettings = pgTable("copyright_settings", {
   id: serial("id").primaryKey(),
-  text: text("text").notNull().default("© ۱۴۰۳ تک پوش خاص. تمامی حقوق محفوظ است."),
+  text: text("text").notNull().default("© 1404 تک پوش خاص. تمامی حقوق محفوظ است."),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-// About page content table
+// About content table
 export const aboutContent = pgTable("about_content", {
   id: serial("id").primaryKey(),
-  title: text("title").notNull().default("درباره تک پوش خاص"),
-  subtitle: text("subtitle").notNull().default("ما برندی هستیم که در خلق پوشاک منحصر به فرد تخصص داریم"),
-  philosophyTitle: text("philosophy_title").notNull().default("فلسفه ما"),
-  philosophyText1: text("philosophy_text1").notNull().default("در تک پوش خاص، ما معتقدیم که هر فرد منحصر به فرد است و پوشاک او نیز باید این منحصر به فرد بودن را منعکس کند."),
-  philosophyText2: text("philosophy_text2").notNull().default("شعار ما \"یک از یک\" نشان‌دهنده تعهد ما به ارائه محصولاتی است که در هیچ جای دیگری پیدا نخواهید کرد."),
-  contactTitle: text("contact_title").notNull().default("تماس با ما"),
-  contactEmail: text("contact_email").notNull().default("info@tekpooshkhaas.com"),
-  contactPhone: text("contact_phone").notNull().default("۰۹۱۲۳۴۵۶۷۸۹"),
-  contactAddress: text("contact_address").notNull().default("تهران، ایران"),
+  title: text("title").notNull().default("درباره ما"),
+  content: text("content").notNull().default("ما برند پیشرو در طراحی تی‌شرت هستیم"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-// User authentication schemas
+// Zod schemas for validation
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
   createdAt: true,
@@ -105,11 +99,10 @@ export const insertUserSchema = createInsertSchema(users).omit({
 });
 
 export const loginUserSchema = z.object({
-  username: z.string().min(3, "نام کاربری باید حداقل ۳ کاراکتر باشد"),
-  password: z.string().min(4, "رمز عبور باید حداقل ۴ کاراکتر باشد"),
+  username: z.string().min(1),
+  password: z.string().min(1),
 });
 
-// Schemas for validation
 export const insertBrandSettingsSchema = createInsertSchema(brandSettings).omit({
   id: true,
   createdAt: true,
@@ -140,7 +133,7 @@ export const insertAboutContentSchema = createInsertSchema(aboutContent).omit({
   updatedAt: true,
 });
 
-// Types
+// TypeScript types
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type LoginUser = z.infer<typeof loginUserSchema>;

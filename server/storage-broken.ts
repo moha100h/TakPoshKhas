@@ -19,16 +19,10 @@ import {
   type InsertAboutContent,
 } from "@shared/schema";
 import { db } from "./db";
-import { eq } from "drizzle-orm";
-import session from "express-session";
-import connectPg from "connect-pg-simple";
-import { pool } from "./db";
+import { eq, and } from "drizzle-orm";
 
 // Interface for storage operations
 export interface IStorage {
-  // Session store
-  sessionStore: session.SessionStore;
-  
   // User operations for username/password auth
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
@@ -60,17 +54,7 @@ export interface IStorage {
 }
 
 export class DatabaseStorage implements IStorage {
-  public sessionStore: session.SessionStore;
-
-  constructor() {
-    const PostgresSessionStore = connectPg(session);
-    this.sessionStore = new PostgresSessionStore({ 
-      pool, 
-      createTableIfMissing: true 
-    });
-  }
-
-  // User operations
+  // User operations for username/password auth
   async getUser(id: number): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.id, id));
     return user;
@@ -99,7 +83,6 @@ export class DatabaseStorage implements IStorage {
         .values({
           name: "تک پوش خاص",
           slogan: "یک از یک",
-          description: "برند پیشرو در طراحی تی‌شرت"
         })
         .returning();
       return newSettings;
@@ -112,14 +95,14 @@ export class DatabaseStorage implements IStorage {
     if (existing) {
       const [updated] = await db
         .update(brandSettings)
-        .set(data)
+        .set({ ...data, updatedAt: new Date() })
         .where(eq(brandSettings.id, existing.id))
         .returning();
       return updated;
     } else {
       const [created] = await db
         .insert(brandSettings)
-        .values(data)
+        .values(data as InsertBrandSettings)
         .returning();
       return created;
     }
@@ -180,16 +163,12 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updateSocialLinks(data: InsertSocialLink[]): Promise<SocialLink[]> {
-    // Clear existing social links
+    // Delete all existing social links
     await db.delete(socialLinks);
     
-    // Insert new social links
+    // Insert new ones
     if (data.length > 0) {
-      const inserted = await db
-        .insert(socialLinks)
-        .values(data)
-        .returning();
-      return inserted;
+      return await db.insert(socialLinks).values(data).returning();
     }
     return [];
   }
@@ -202,7 +181,7 @@ export class DatabaseStorage implements IStorage {
       const [newSettings] = await db
         .insert(copyrightSettings)
         .values({
-          text: "© 1404 تک پوش خاص. تمامی حقوق محفوظ است."
+          text: "© ۱۴۰۳ تک پوش خاص. تمامی حقوق محفوظ است.",
         })
         .returning();
       return newSettings;
@@ -215,7 +194,7 @@ export class DatabaseStorage implements IStorage {
     if (existing) {
       const [updated] = await db
         .update(copyrightSettings)
-        .set(data)
+        .set({ ...data, updatedAt: new Date() })
         .where(eq(copyrightSettings.id, existing.id))
         .returning();
       return updated;
@@ -228,20 +207,8 @@ export class DatabaseStorage implements IStorage {
     }
   }
 
-  // About content operations
   async getAboutContent(): Promise<AboutContent | undefined> {
     const [content] = await db.select().from(aboutContent).limit(1);
-    if (!content) {
-      // Create default content if none exists
-      const [newContent] = await db
-        .insert(aboutContent)
-        .values({
-          title: "درباره ما",
-          content: "ما برند پیشرو در طراحی تی‌شرت هستیم که با ترکیب خلاقیت و کیفیت، محصولاتی منحصر به فرد ارائه می‌دهیم."
-        })
-        .returning();
-      return newContent;
-    }
     return content;
   }
 
@@ -250,7 +217,7 @@ export class DatabaseStorage implements IStorage {
     if (existing) {
       const [updated] = await db
         .update(aboutContent)
-        .set(data)
+        .set({ ...data, updatedAt: new Date() })
         .where(eq(aboutContent.id, existing.id))
         .returning();
       return updated;
