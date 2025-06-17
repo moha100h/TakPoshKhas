@@ -1,0 +1,29 @@
+bash <(curl -Ls https://raw.githubusercontent.com/moha100h/TakPoshKhas/main/quick-fix.sh)
+[INFO] متوقف کردن پروسه‌های موجود...
+[INFO] اصلاح فایل سرویس...
+[INFO] ایجاد سرور تولید...
+[INFO] راه‌اندازی سرویس...
+Created symlink /etc/systemd/system/multi-user.target.wants/tek-push-khas.service → /etc/systemd/system/tek-push-khas.service.
+[ERROR] ❌ سرویس راه‌اندازی نشد
+Jun 17 13:26:30 bayat-ub22 systemd[1]: /etc/systemd/system/tek-push-khas.service:18: Standard output type syslog is obsolete, automatically updating to journal. Please update your unit file, and consider removing the setting altogether.
+Jun 17 13:27:02 bayat-ub22 systemd[1]: tek-push-khas.service: Current command vanished from the unit file, execution of the command list won't be resumed.
+Jun 17 13:36:46 bayat-ub22 systemd[1]: Stopping Tek Push Khas Application...
+Jun 17 13:36:46 bayat-ub22 systemd[1]: tek-push-khas.service: Main process exited, code=exited, status=143/n/a
+Jun 17 13:36:46 bayat-ub22 systemd[1]: tek-push-khas.service: Failed with result 'exit-code'.
+Jun 17 13:36:46 bayat-ub22 systemd[1]: Stopped Tek Push Khas Application.
+Jun 17 13:36:46 bayat-ub22 systemd[1]: tek-push-khas.service: Consumed 1.610s CPU time.
+Jun 17 14:01:05 bayat-ub22 systemd[1]: Started Tek Push Khas Application.
+Jun 17 14:01:05 bayat-ub22 node[36746]: file:///opt/tek-push-khas/dist/server/index.js:1
+Jun 17 14:01:05 bayat-ub22 node[36746]: const express = require('express');
+Jun 17 14:01:05 bayat-ub22 node[36746]:                 ^
+Jun 17 14:01:05 bayat-ub22 node[36746]: ReferenceError: require is not defined in ES module scope, you can use import instead
+Jun 17 14:01:05 bayat-ub22 node[36746]: This file is being treated as an ES module because it has a '.js' file extension and '/opt/tek-push-khas/package.json' contains "type": "module". To treat it as a CommonJS script, rename it to use the '.cjs' file extension.
+Jun 17 14:01:05 bayat-ub22 node[36746]:     at file:///opt/tek-push-khas/dist/server/index.js:1:17
+Jun 17 14:01:05 bayat-ub22 node[36746]:     at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+Jun 17 14:01:05 bayat-ub22 node[36746]:     at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+Jun 17 14:01:05 bayat-ub22 node[36746]:     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+Jun 17 14:01:05 bayat-ub22 node[36746]: Node.js v20.19.2
+Jun 17 14:01:05 bayat-ub22 systemd[1]: tek-push-khas.service: Main process exited, code=exited, status=1/FAILURE
+Jun 17 14:01:05 bayat-ub22 systemd[1]: tek-push-khas.service: Failed with result 'exit-code'.
+[INFO] تست API endpoints...
+[ERROR] ❌ Health endpoint کار نمی‌کند

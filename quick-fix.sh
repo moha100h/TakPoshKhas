@@ -40,7 +40,7 @@ WorkingDirectory=${APP_DIR}
 Environment=NODE_ENV=production
 Environment=PORT=5000
 EnvironmentFile=${APP_DIR}/.env
-ExecStart=/usr/bin/node ${APP_DIR}/dist/server/index.js
+ExecStart=/usr/bin/node ${APP_DIR}/dist/server/index.cjs
 Restart=always
 RestartSec=5
 StartLimitInterval=60s
@@ -55,12 +55,12 @@ TimeoutStopSec=30
 WantedBy=multi-user.target
 EOF
 
-# Create production server if missing
-if [ ! -f "${APP_DIR}/dist/server/index.js" ]; then
-    log_info "ایجاد سرور تولید..."
-    mkdir -p ${APP_DIR}/dist/server
-    
-    cat > ${APP_DIR}/dist/server/index.js << 'EOJS'
+# Create production server
+log_info "ایجاد سرور تولید..."
+mkdir -p ${APP_DIR}/dist/server
+rm -f ${APP_DIR}/dist/server/index.js ${APP_DIR}/dist/server/index.cjs
+
+cat > ${APP_DIR}/dist/server/index.cjs << 'EOJS'
 const express = require('express');
 const { Pool } = require('pg');
 
@@ -186,8 +186,7 @@ app.listen(PORT, '0.0.0.0', () => {
 });
 EOJS
 
-    chown -R www-data:www-data ${APP_DIR}
-fi
+chown -R www-data:www-data ${APP_DIR}
 
 # Reload systemd and start service
 log_info "راه‌اندازی سرویس..."
