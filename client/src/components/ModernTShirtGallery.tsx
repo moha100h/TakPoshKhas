@@ -115,8 +115,9 @@ function ProductDetailModal({ product, isOpen, onClose }: ProductDetailModalProp
 export default function ModernTShirtGallery() {
   const [selectedProduct, setSelectedProduct] = useState<TshirtImage | null>(null);
 
-  const { data: tshirtImages, isLoading } = useQuery<TshirtImage[]>({
+  const { data: tshirtImages, isLoading, error } = useQuery<TshirtImage[]>({
     queryKey: ["/api/tshirt-images"],
+    retry: false,
   });
 
   const openProductDetail = (product: TshirtImage) => {
@@ -129,19 +130,41 @@ export default function ModernTShirtGallery() {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 p-8">
-        {[...Array(8)].map((_, i) => (
-          <div
-            key={i}
-            className="modern-card animate-pulse h-96"
-          >
-            <div className="bg-[var(--light-gray)] h-64 rounded-t-2xl" />
-            <div className="p-6 space-y-3">
-              <div className="h-4 bg-[var(--light-gray)] rounded" />
-              <div className="h-3 bg-[var(--light-gray)] rounded w-2/3" />
+      <div className="responsive-container py-4 md:py-8">
+        <div className="responsive-grid-4 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
+          {[...Array(8)].map((_, i) => (
+            <div
+              key={i}
+              className="modern-card animate-pulse h-64 sm:h-80 md:h-96"
+            >
+              <div className="bg-[var(--light-gray)] h-44 sm:h-52 md:h-60 rounded-t-2xl" />
+              <div className="p-3 sm:p-4 md:p-6 space-y-2 sm:space-y-3">
+                <div className="h-3 sm:h-4 bg-[var(--light-gray)] rounded" />
+                <div className="h-2 sm:h-3 bg-[var(--light-gray)] rounded w-2/3" />
+              </div>
             </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-20">
+        <div className="max-w-md mx-auto space-y-6">
+          <div className="w-24 h-24 mx-auto bg-[var(--light-red)] rounded-full flex items-center justify-center">
+            <span className="text-3xl">⚠️</span>
           </div>
-        ))}
+          <div>
+            <h3 className="text-xl font-semibold text-[var(--text-black)] mb-2">
+              خطا در بارگذاری
+            </h3>
+            <p className="text-[var(--text-gray)]">
+              لطفاً صفحه را مجدداً بارگذاری کنید
+            </p>
+          </div>
+        </div>
       </div>
     );
   }

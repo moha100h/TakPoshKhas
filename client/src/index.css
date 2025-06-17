@@ -118,6 +118,13 @@
     @apply shadow-md hover:shadow-lg active:scale-95;
   }
 
+  /* Modern Card */
+  .modern-card {
+    @apply bg-[var(--pure-white)] rounded-2xl shadow-md hover:shadow-xl;
+    @apply transition-all duration-300 border border-[var(--medium-gray)];
+    @apply overflow-hidden;
+  }
+
   /* Header Blur */
   .header-blur {
     backdrop-filter: blur(20px);
