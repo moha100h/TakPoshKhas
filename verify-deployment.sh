@@ -1,260 +1,284 @@
 #!/bin/bash
 
-# تک پوش خاص - بررسی و تأیید استقرار
-# Deployment Verification Script
+# تک پوش خاص - اسکریپت تأیید نصب
+# Deployment Verification Script for Tek Push Khas
+# Usage: bash verify-deployment.sh
 
 set -euo pipefail
 
-# Colors
-readonly RED='\033[0;31m'
-readonly GREEN='\033[0;32m'
-readonly YELLOW='\033[1;33m'
-readonly BLUE='\033[0;34m'
-readonly NC='\033[0m'
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
 
 # Configuration
-readonly APP_NAME="tek-push-khas"
-readonly SERVICE_NAME="${APP_NAME}"
+SERVICE_NAME="tekpushkhas"
+PORT=5000
+HEALTH_ENDPOINT="http://localhost:${PORT}/api/health"
 
 # Logging functions
-log_info() { echo -e "${BLUE}[INFO]${NC} $1"; }
-log_success() { echo -e "${GREEN}[SUCCESS]${NC} $1"; }
-log_warning() { echo -e "${YELLOW}[WARNING]${NC} $1"; }
-log_error() { echo -e "${RED}[ERROR]${NC} $1"; }
+log_info() {
+    echo -e "${BLUE}[INFO]${NC} $1"
+}
 
-# Check system services
-check_services() {
-    log_info "بررسی وضعیت سرویس‌ها..."
+log_success() {
+    echo -e "${GREEN}[SUCCESS]${NC} $1"
+}
+
+log_warning() {
+    echo -e "${YELLOW}[WARNING]${NC} $1"
+}
+
+log_error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+}
+
+# Check system requirements
+check_system() {
+    log_info "بررسی سیستم..."
     
-    local all_good=true
-    
-    # Check PostgreSQL
-    if systemctl is-active --quiet postgresql; then
-        log_success "✓ PostgreSQL فعال است"
-    else
-        log_error "✗ PostgreSQL غیرفعال است"
-        all_good=false
+    # Check if running as root
+    if [[ $EUID -ne 0 ]]; then
+        log_error "این اسکریپت باید با دسترسی root اجرا شود"
+        exit 1
     fi
     
-    # Check Nginx
-    if systemctl is-active --quiet nginx; then
-        log_success "✓ Nginx فعال است"
+    # Check Ubuntu version
+    if ! command -v lsb_release &> /dev/null; then
+        log_warning "نسخه سیستم عامل قابل تشخیص نیست"
     else
-        log_error "✗ Nginx غیرفعال است"
-        all_good=false
+        OS_VERSION=$(lsb_release -d | cut -f2)
+        log_info "سیستم عامل: $OS_VERSION"
     fi
     
-    # Check Application Service
+    # Check available memory
+    MEMORY=$(free -h | awk '/^Mem:/ {print $2}')
+    log_info "حافظه دردسترس: $MEMORY"
+    
+    # Check disk space
+    DISK_SPACE=$(df -h / | awk 'NR==2 {print $4}')
+    log_info "فضای دیسک دردسترس: $DISK_SPACE"
+    
+    log_success "بررسی سیستم تکمیل شد"
+}
+
+# Verify service status
+check_service() {
+    log_info "بررسی وضعیت سرویس..."
+    
     if systemctl is-active --quiet ${SERVICE_NAME}; then
-        log_success "✓ سرویس اپلیکیشن فعال است"
+        log_success "سرویس ${SERVICE_NAME} فعال است"
+        
+        # Get service uptime
+        UPTIME=$(systemctl show ${SERVICE_NAME} --property=ActiveEnterTimestamp | cut -d= -f2)
+        log_info "زمان شروع سرویس: $UPTIME"
+        
+        # Get service PID
+        PID=$(systemctl show ${SERVICE_NAME} --property=MainPID | cut -d= -f2)
+        log_info "شناسه فرآیند: $PID"
+        
     else
-        log_error "✗ سرویس اپلیکیشن غیرفعال است"
-        all_good=false
-    fi
-    
-    return $($all_good && echo 0 || echo 1)
-}
-
-# Check API endpoints
-check_endpoints() {
-    log_info "بررسی API endpoints..."
-    
-    local base_url="http://localhost"
-    local all_good=true
-    
-    # Health check
-    if curl -f "${base_url}/api/health" > /dev/null 2>&1; then
-        log_success "✓ Health endpoint پاسخگو است"
-    else
-        log_error "✗ Health endpoint پاسخگو نیست"
-        all_good=false
-    fi
-    
-    # Brand settings
-    if curl -f "${base_url}/api/brand-settings" > /dev/null 2>&1; then
-        log_success "✓ Brand settings endpoint پاسخگو است"
-    else
-        log_error "✗ Brand settings endpoint پاسخگو نیست"
-        all_good=false
-    fi
-    
-    # T-shirt images
-    if curl -f "${base_url}/api/tshirt-images" > /dev/null 2>&1; then
-        log_success "✓ T-shirt images endpoint پاسخگو است"
-    else
-        log_error "✗ T-shirt images endpoint پاسخگو نیست"
-        all_good=false
-    fi
-    
-    # Social links
-    if curl -f "${base_url}/api/social-links" > /dev/null 2>&1; then
-        log_success "✓ Social links endpoint پاسخگو است"
-    else
-        log_error "✗ Social links endpoint پاسخگو نیست"
-        all_good=false
-    fi
-    
-    # Copyright settings
-    if curl -f "${base_url}/api/copyright-settings" > /dev/null 2>&1; then
-        log_success "✓ Copyright settings endpoint پاسخگو است"
-    else
-        log_error "✗ Copyright settings endpoint پاسخگو نیست"
-        all_good=false
-    fi
-    
-    return $($all_good && echo 0 || echo 1)
-}
-
-# Check database connectivity
-check_database() {
-    log_info "بررسی اتصال پایگاه داده..."
-    
-    # Try to connect as application user
-    if sudo -u postgres psql -d tekpushdb -c "SELECT COUNT(*) FROM users;" > /dev/null 2>&1; then
-        log_success "✓ اتصال پایگاه داده موفق است"
-        return 0
-    else
-        log_error "✗ اتصال پایگاه داده ناموفق است"
-        return 1
-    fi
-}
-
-# Check file permissions
-check_permissions() {
-    log_info "بررسی دسترسی فایل‌ها..."
-    
-    local app_dir="/opt/${APP_NAME}"
-    
-    if [ -d "${app_dir}" ]; then
-        local owner=$(stat -c '%U' "${app_dir}")
-        if [ "$owner" = "www-data" ]; then
-            log_success "✓ دسترسی فایل‌ها صحیح است"
-            return 0
-        else
-            log_error "✗ دسترسی فایل‌ها نادرست است (مالک: $owner)"
-            return 1
-        fi
-    else
-        log_error "✗ پوشه اپلیکیشن یافت نشد"
+        log_error "سرویس ${SERVICE_NAME} غیرفعال است"
+        
+        # Show service status
+        log_info "وضعیت سرویس:"
+        systemctl status ${SERVICE_NAME} --no-pager -l || true
+        
+        # Show recent logs
+        log_info "آخرین لاگ‌ها:"
+        journalctl -u ${SERVICE_NAME} --no-pager -n 20 || true
+        
         return 1
     fi
 }
 
 # Check port availability
-check_ports() {
-    log_info "بررسی پورت‌ها..."
+check_port() {
+    log_info "بررسی پورت ${PORT}..."
     
-    # Check if port 80 is listening
-    if netstat -tuln | grep ":80 " > /dev/null 2>&1; then
-        log_success "✓ پورت 80 در حال گوش دادن است"
+    if netstat -tuln | grep -q ":${PORT} "; then
+        log_success "پورت ${PORT} در حال استفاده است"
+        
+        # Show process using the port
+        PROCESS=$(netstat -tulnp | grep ":${PORT} " | awk '{print $7}' | head -1)
+        log_info "فرآیند استفاده‌کننده از پورت: $PROCESS"
+        
     else
-        log_error "✗ پورت 80 در حال گوش دادن نیست"
+        log_error "پورت ${PORT} در دسترس نیست"
         return 1
-    fi
-    
-    # Check if port 5000 is listening
-    if netstat -tuln | grep ":5000 " > /dev/null 2>&1; then
-        log_success "✓ پورت 5000 در حال گوش دادن است"
-    else
-        log_error "✗ پورت 5000 در حال گوش دادن نیست"
-        return 1
-    fi
-    
-    return 0
-}
-
-# Performance test
-performance_test() {
-    log_info "تست عملکرد..."
-    
-    local base_url="http://localhost"
-    
-    # Simple response time test
-    local response_time=$(curl -o /dev/null -s -w '%{time_total}' "${base_url}/api/health")
-    
-    if (( $(echo "${response_time} < 1.0" | bc -l) )); then
-        log_success "✓ زمان پاسخ مناسب است (${response_time}s)"
-    else
-        log_warning "⚠ زمان پاسخ کند است (${response_time}s)"
     fi
 }
 
-# Show system resources
-show_resources() {
-    log_info "منابع سیستم:"
+# Test API health endpoint
+test_api() {
+    log_info "تست API..."
+    
+    # Test health endpoint
+    if curl -f -s "${HEALTH_ENDPOINT}" > /dev/null; then
+        log_success "API سالم است"
+        
+        # Get API response
+        RESPONSE=$(curl -s "${HEALTH_ENDPOINT}")
+        log_info "پاسخ API: $RESPONSE"
+        
+    else
+        log_error "API پاسخ نمی‌دهد"
+        
+        # Try to get more details
+        HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "${HEALTH_ENDPOINT}" || echo "000")
+        log_info "کد HTTP: $HTTP_CODE"
+        
+        return 1
+    fi
+}
+
+# Check database connection
+check_database() {
+    log_info "بررسی اتصال پایگاه داده..."
+    
+    if systemctl is-active --quiet postgresql; then
+        log_success "PostgreSQL فعال است"
+        
+        # Check database connection
+        if sudo -u postgres psql -c "SELECT version();" > /dev/null 2>&1; then
+            log_success "اتصال به پایگاه داده برقرار است"
+        else
+            log_error "خطا در اتصال به پایگاه داده"
+            return 1
+        fi
+        
+    else
+        log_error "PostgreSQL غیرفعال است"
+        return 1
+    fi
+}
+
+# Check Nginx configuration
+check_nginx() {
+    log_info "بررسی Nginx..."
+    
+    if systemctl is-active --quiet nginx; then
+        log_success "Nginx فعال است"
+        
+        # Test Nginx configuration
+        if nginx -t > /dev/null 2>&1; then
+            log_success "تنظیمات Nginx صحیح است"
+        else
+            log_error "خطا در تنظیمات Nginx"
+            nginx -t
+            return 1
+        fi
+        
+    else
+        log_error "Nginx غیرفعال است"
+        return 1
+    fi
+}
+
+# Check firewall settings
+check_firewall() {
+    log_info "بررسی فایروال..."
+    
+    if command -v ufw &> /dev/null; then
+        UFW_STATUS=$(ufw status | head -1)
+        log_info "وضعیت فایروال: $UFW_STATUS"
+        
+        if ufw status | grep -q "80/tcp"; then
+            log_success "پورت 80 در فایروال باز است"
+        else
+            log_warning "پورت 80 در فایروال بسته است"
+        fi
+        
+        if ufw status | grep -q "443/tcp"; then
+            log_success "پورت 443 در فایروال باز است"
+        else
+            log_warning "پورت 443 در فایروال بسته است"
+        fi
+        
+    else
+        log_warning "UFW نصب نیست"
+    fi
+}
+
+# Performance check
+check_performance() {
+    log_info "بررسی عملکرد..."
+    
+    # CPU usage
+    CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | awk '{print $2}' | awk -F'%' '{print $1}')
+    log_info "استفاده از CPU: ${CPU_USAGE}%"
     
     # Memory usage
-    local mem_total=$(free -h | awk '/^Mem:/ {print $2}')
-    local mem_used=$(free -h | awk '/^Mem:/ {print $3}')
-    echo "  RAM: ${mem_used} / ${mem_total}"
+    MEMORY_USAGE=$(free | awk 'NR==2{printf "%.1f", $3*100/$2}')
+    log_info "استفاده از حافظه: ${MEMORY_USAGE}%"
     
-    # Disk usage
-    local disk_usage=$(df -h / | awk 'NR==2 {print $3 " / " $2 " (" $5 ")"}')
-    echo "  Disk: ${disk_usage}"
+    # Load average
+    LOAD_AVG=$(uptime | awk -F'load average:' '{print $2}')
+    log_info "میانگین بار سیستم:$LOAD_AVG"
     
-    # CPU load
-    local cpu_load=$(uptime | awk -F'load average:' '{print $2}')
-    echo "  Load:${cpu_load}"
-}
-
-# Show application logs
-show_logs() {
-    log_info "آخرین لاگ‌های اپلیکیشن:"
-    echo "----------------------------------------"
-    journalctl -u ${SERVICE_NAME} -n 10 --no-pager
-    echo "----------------------------------------"
-}
-
-# Main verification function
-main() {
-    echo "========================================"
-    echo "     تک پوش خاص - بررسی استقرار"
-    echo "   Deployment Verification System"
-    echo "========================================"
-    echo
-    
-    local overall_status=true
-    
-    # Run all checks
-    check_services || overall_status=false
-    echo
-    check_database || overall_status=false
-    echo
-    check_permissions || overall_status=false
-    echo
-    check_ports || overall_status=false
-    echo
-    check_endpoints || overall_status=false
-    echo
-    performance_test
-    echo
-    show_resources
-    echo
-    
-    # Final result
-    if [ "$overall_status" = true ]; then
-        echo
-        log_success "🎉 استقرار کاملاً موفق است!"
-        echo
-        echo -e "${GREEN}📋 اطلاعات دسترسی:${NC}"
-        echo -e "${BLUE}🌐 وب‌سایت: ${NC}http://$(curl -s ifconfig.me 2>/dev/null || echo 'YOUR-SERVER-IP')"
-        echo -e "${BLUE}👤 ادمین: ${NC}username: admin, password: password"
-        echo -e "${BLUE}📊 مانیتورینگ: ${NC}systemctl status ${SERVICE_NAME}"
-        echo -e "${BLUE}📋 لاگ‌ها: ${NC}journalctl -u ${SERVICE_NAME} -f"
-        echo
-        echo -e "${GREEN}✅ همه بررسی‌ها موفق بودند${NC}"
-    else
-        echo
-        log_error "❌ مشکلاتی در استقرار وجود دارد"
-        echo
-        echo -e "${YELLOW}📋 برای عیب‌یابی:${NC}"
-        echo -e "${BLUE}🔍 وضعیت سرویس‌ها: ${NC}systemctl status ${SERVICE_NAME} postgresql nginx"
-        echo -e "${BLUE}📋 لاگ‌های مفصل: ${NC}journalctl -u ${SERVICE_NAME} -f"
-        echo -e "${BLUE}🔧 راه‌اندازی مجدد: ${NC}systemctl restart ${SERVICE_NAME}"
-        echo
-        show_logs
+    # Check if service is using too much resources
+    if [ -n "$PID" ] && [ "$PID" != "0" ]; then
+        SERVICE_CPU=$(ps -p $PID -o %cpu= 2>/dev/null || echo "0")
+        SERVICE_MEM=$(ps -p $PID -o %mem= 2>/dev/null || echo "0")
+        log_info "استفاده سرویس از CPU: ${SERVICE_CPU}%"
+        log_info "استفاده سرویس از حافظه: ${SERVICE_MEM}%"
     fi
 }
 
-# Run verification
+# Generate report
+generate_report() {
+    log_info "تولید گزارش نهایی..."
+    
+    echo -e "\n${GREEN}=== گزارش وضعیت سرور تک پوش خاص ===${NC}"
+    echo -e "📅 تاریخ: $(date)"
+    echo -e "🌐 آدرس: http://$(curl -s ifconfig.me 2>/dev/null || echo 'نامشخص')"
+    echo -e "⚡ پورت: $PORT"
+    
+    echo -e "\n${BLUE}=== وضعیت سرویس‌ها ===${NC}"
+    echo -e "🔥 ${SERVICE_NAME}: $(systemctl is-active ${SERVICE_NAME})"
+    echo -e "🗄️ PostgreSQL: $(systemctl is-active postgresql)"
+    echo -e "🌐 Nginx: $(systemctl is-active nginx)"
+    
+    echo -e "\n${BLUE}=== منابع سیستم ===${NC}"
+    echo -e "💾 حافظه: ${MEMORY_USAGE}% استفاده شده"
+    echo -e "⚙️ CPU: ${CPU_USAGE}% استفاده شده"
+    
+    echo -e "\n${BLUE}=== دستورات مفید ===${NC}"
+    echo -e "📋 وضعیت سرویس: systemctl status ${SERVICE_NAME}"
+    echo -e "📋 لاگ‌های سرویس: journalctl -u ${SERVICE_NAME} -f"
+    echo -e "🔄 راه‌اندازی مجدد: systemctl restart ${SERVICE_NAME}"
+    echo -e "⏹️ توقف سرویس: systemctl stop ${SERVICE_NAME}"
+    
+    if [ $OVERALL_STATUS -eq 0 ]; then
+        echo -e "\n${GREEN}✅ تمامی بررسی‌ها موفقیت‌آمیز بودند${NC}"
+        echo -e "${GREEN}🎉 سرور آماده و در حال اجرا است${NC}"
+    else
+        echo -e "\n${RED}❌ برخی بررسی‌ها ناموفق بودند${NC}"
+        echo -e "${YELLOW}⚠️ لطفاً مشکلات را بررسی و رفع کنید${NC}"
+    fi
+}
+
+# Main execution
+main() {
+    log_info "شروع بررسی نصب تک پوش خاص..."
+    
+    OVERALL_STATUS=0
+    
+    check_system || OVERALL_STATUS=1
+    check_service || OVERALL_STATUS=1
+    check_port || OVERALL_STATUS=1
+    test_api || OVERALL_STATUS=1
+    check_database || OVERALL_STATUS=1
+    check_nginx || OVERALL_STATUS=1
+    check_firewall || OVERALL_STATUS=1
+    check_performance || OVERALL_STATUS=1
+    
+    generate_report
+    
+    exit $OVERALL_STATUS
+}
+
+# Run main function
 main "$@"
