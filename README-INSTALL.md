@@ -244,7 +244,7 @@ sudo systemctl restart tek-push-khas
 - [API Reference](https://docs.tek-push-khas.com/api)
 
 ### گزارش باگ
-مشکلات خود را در [گیت‌هاب](https://github.com/tek-push-khas/website/issues) گزارش دهید.
+مشکلات خود را در [گیت‌هاب](https://github.com/moha100h/tek-push-khas/issues) گزارش دهید.
 
 ## مجوز
 

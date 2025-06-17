@@ -3,7 +3,7 @@
 ## نصب یک خطی
 
 ```bash
-bash <(curl -Ls https://raw.githubusercontent.com/tek-push-khas/install/main/install.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/moha100h/tek-push-khas-install/main/install.sh)
 ```
 
 ## پس از نصب
@@ -35,7 +35,7 @@ sudo journalctl -u tek-push-khas -f
 sudo /usr/local/bin/backup-tek-push-khas
 
 # به‌روزرسانی
-bash <(curl -Ls https://raw.githubusercontent.com/tek-push-khas/install/main/update.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/moha100h/tek-push-khas-install/main/update.sh)
 ```
 
 ## مسیرهای مهم
