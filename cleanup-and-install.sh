@@ -369,6 +369,7 @@ create_production_server() {
     log_info "ایجاد سرور تولید..."
     
     mkdir -p ${APP_DIR}/dist/server
+    mkdir -p ${APP_DIR}/logs
     
     cat > ${APP_DIR}/dist/server/index.js << 'EOJS'
 const express = require('express');
@@ -630,12 +631,37 @@ const gracefulShutdown = () => {
 process.on('SIGTERM', gracefulShutdown);
 process.on('SIGINT', gracefulShutdown);
 
-// Start server
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 تک پوش خاص سرور در پورت ${PORT} راه‌اندازی شد`);
-  console.log(`📅 ${new Date().toISOString()}`);
-  console.log(`🔗 http://localhost:${PORT}`);
-});
+// Start server with enhanced error handling
+const startServer = async () => {
+  try {
+    // Test database connection before starting
+    await pool.query('SELECT NOW()');
+    console.log('✅ Database connection established');
+    
+    const server = app.listen(PORT, '0.0.0.0', () => {
+      console.log(`🚀 تک پوش خاص سرور در پورت ${PORT} راه‌اندازی شد`);
+      console.log(`📅 ${new Date().toISOString()}`);
+      console.log(`🔗 http://localhost:${PORT}`);
+      console.log(`🟢 Server is ready to accept connections`);
+    });
+    
+    server.on('error', (error) => {
+      console.error('❌ Server error:', error);
+      if (error.code === 'EADDRINUSE') {
+        console.error(`Port ${PORT} is already in use`);
+        process.exit(1);
+      }
+    });
+    
+  } catch (error) {
+    console.error('❌ Failed to start server:', error);
+    console.error('Database connection failed');
+    process.exit(1);
+  }
+};
+
+// Start the server
+startServer();
 EOJS
 
     chown -R www-data:www-data ${APP_DIR}/dist
@@ -690,7 +716,6 @@ StartLimitInterval=60s
 StartLimitBurst=3
 StandardOutput=journal
 StandardError=journal
-SyslogIdentifier=${SERVICE_NAME}
 KillMode=mixed
 KillSignal=SIGTERM
 TimeoutStopSec=30

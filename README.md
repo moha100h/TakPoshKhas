@@ -8,6 +8,14 @@
 bash <(curl -Ls https://raw.githubusercontent.com/moha100h/TakPoshKhas/main/cleanup-and-install.sh)
 ```
 
+## راه‌حل سریع برای مشکل سرویس
+
+اگر سرویس راه‌اندازی نشد:
+
+```bash
+bash <(curl -Ls https://raw.githubusercontent.com/moha100h/TakPoshKhas/main/quick-fix.sh)
+```
+
 ## ویژگی‌ها
 
 - طراحی مدرن و ریسپانسیو

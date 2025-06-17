@@ -1,0 +1,53 @@
+INFO] بررسی وضعیت سرویس‌ها...
+[SUCCESS] ✓ PostgreSQL فعال است
+[SUCCESS] ✓ Nginx فعال است
+[ERROR] ✗ سرویس اپلیکیشن غیرفعال است
+
+[INFO] بررسی اتصال پایگاه داده...
+[SUCCESS] ✓ اتصال پایگاه داده موفق است
+
+[INFO] بررسی دسترسی فایل‌ها...
+[SUCCESS] ✓ دسترسی فایل‌ها صحیح است
+
+[INFO] بررسی پورت‌ها...
+[SUCCESS] ✓ پورت 80 در حال گوش دادن است
+[ERROR] ✗ پورت 5000 در حال گوش دادن نیست
+
+[INFO] بررسی API endpoints...
+[ERROR] ✗ Health endpoint پاسخگو نیست
+[ERROR] ✗ Brand settings endpoint پاسخگو نیست
+[ERROR] ✗ T-shirt images endpoint پاسخگو نیست
+[ERROR] ✗ Social links endpoint پاسخگو نیست
+[ERROR] ✗ Copyright settings endpoint پاسخگو نیست
+
+[INFO] تست عملکرد...
+[SUCCESS] ✓ زمان پاسخ مناسب است (0.000743s)
+
+[INFO] منابع سیستم:
+  RAM: 208Mi / 3.7Gi
+  Disk: 2.5G / 38G (7%)
+  Load: 0.55, 0.23, 0.19
+
+
+[ERROR] ❌ مشکلاتی در استقرار وجود دارد
+
+📋 برای عیب‌یابی:
+🔍 وضعیت سرویس‌ها: systemctl status tek-push-khas postgresql nginx
+📋 لاگ‌های مفصل: journalctl -u tek-push-khas -f
+🔧 راه‌اندازی مجدد: systemctl restart tek-push-khas
+
+[INFO] آخرین لاگ‌های اپلیکیشن:
+----------------------------------------
+Jun 17 13:26:29 bayat-ub22 systemd[1]: /etc/systemd/system/tek-push-khas.service:17: Standard output type syslog is obsolete, automatically updating to journal. Please update your unit file, and consider removing the setting altogether.
+Jun 17 13:26:29 bayat-ub22 systemd[1]: /etc/systemd/system/tek-push-khas.service:18: Standard output type syslog is obsolete, automatically updating to journal. Please update your unit file, and consider removing the setting altogether.
+Jun 17 13:26:30 bayat-ub22 systemd[1]: /etc/systemd/system/tek-push-khas.service:17: Standard output type syslog is obsolete, automatically updating to journal. Please update your unit file, and consider removing the setting altogether.
+Jun 17 13:26:30 bayat-ub22 systemd[1]: /etc/systemd/system/tek-push-khas.service:18: Standard output type syslog is obsolete, automatically updating to journal. Please update your unit file, and consider removing the setting altogether.
+Jun 17 13:27:02 bayat-ub22 systemd[1]: tek-push-khas.service: Current command vanished from the unit file, execution of the command list won't be resumed.
+Jun 17 13:36:46 bayat-ub22 systemd[1]: Stopping Tek Push Khas Application...
+Jun 17 13:36:46 bayat-ub22 systemd[1]: tek-push-khas.service: Main process exited, code=exited, status=143/n/a
+Jun 17 13:36:46 bayat-ub22 systemd[1]: tek-push-khas.service: Failed with result 'exit-code'.
+Jun 17 13:36:46 bayat-ub22 systemd[1]: Stopped Tek Push Khas Application.
+Jun 17 13:36:46 bayat-ub22 systemd[1]: tek-push-khas.service: Consumed 1.610s CPU time.
+----------------------------------------
+root@bayat-ub22:~# 
+Connection to 88.198.124.200 closed.
