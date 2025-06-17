@@ -8,6 +8,14 @@
 bash <(curl -Ls https://raw.githubusercontent.com/moha100h/TakPoshKhas/main/cleanup-and-install.sh)
 ```
 
+## بررسی استقرار پس از نصب
+
+برای تأیید موفقیت نصب:
+
+```bash
+bash <(curl -Ls https://raw.githubusercontent.com/moha100h/TakPoshKhas/main/verify-deployment.sh)
+```
+
 ## مشخصات سیستم مورد نیاز
 
 - **سیستم عامل**: Ubuntu 22.04 LTS

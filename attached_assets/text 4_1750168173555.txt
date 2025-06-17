@@ -1,0 +1,824 @@
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/dom-helpers/cjs/hyphenate.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/date-fns/locale/bg.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/@tanstack/query-core/build/modern/queriesObserver.cjs'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/opt/tek-push-khas/node_modules/@jridgewell/trace-mapping/dist/types'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/@emnapi/runtime/dist/emnapi.d.mts'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/path-scurry/node_modules/lru-cache/dist/commonjs/index.d.ts.map'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/type/map/is.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/tailwindcss/src/lib/collapseDuplicateDeclarations.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/jose/dist/webapi/lib/digest.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/opt/tek-push-khas/node_modules/iconv-lite/lib'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/d3-shape/src/order/insideOut.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/date-fns/locale/bn.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/type/object/is.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/tailwindcss/lib/util/color.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/opt/tek-push-khas/node_modules/react-day-picker/src/components'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/jose/dist/webapi/lib/ecdhes.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/glob/dist/esm/index.d.ts.map'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/es5-ext/function/constant.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/dom-helpers/cjs/hyphenateStyle.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/drizzle-orm/mysql-core/columns/common.cjs'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/d3-shape/src/line.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/date-fns/locale/bs.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/opt/tek-push-khas/node_modules/@jridgewell/trace-mapping/dist/types'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/@emnapi/runtime/dist/emnapi.min.d.mts'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/opt/tek-push-khas/node_modules/victory-vendor/lib-vendor/d3-interpolate/src'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/type/plain-function/is.js'
+npm warn cleanup Failed to remove some directories [
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/csstype',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/csstype'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/csstype'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/drizzle-zod',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/drizzle-zod'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/drizzle-zod'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/undici-types',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/undici-types'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/undici-types'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/express-session/node_modules/cookie',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/express-session/node_modules/cookie'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/express-session/node_modules/cookie'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/finalhandler/node_modules/debug',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/finalhandler/node_modules/debug'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/finalhandler/node_modules/debug'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/pg/node_modules/pg-types',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/pg/node_modules/pg-types'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/pg/node_modules/pg-types'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/drizzle-zod'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/drizzle-zod'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@neondatabase',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@neondatabase/serverless'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@neondatabase/serverless'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/any-promise',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/any-promise/register'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/any-promise/register'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/d3-format',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/d3-format/locale'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/d3-format/locale'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/d3-scale',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/d3-scale/src'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/d3-scale/src'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/d3-time-format',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/d3-time-format/locale'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/d3-time-format/locale'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/dom-helpers',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/dom-helpers/cjs'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/dom-helpers/cjs'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/es5-ext',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/es5-ext/object'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/es5-ext/object'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/ext',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/ext/math'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/ext/math'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/lodash',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/lodash/fp'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/lodash/fp'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/pg-protocol',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/pg-protocol/dist'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/pg-protocol/dist'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/type',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/type/safe-integer'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/type/safe-integer'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@babel/runtime',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@babel/runtime/helpers'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@babel/runtime/helpers'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@floating-ui/dom',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@floating-ui/dom/dist'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@floating-ui/dom/dist'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@floating-ui/react-dom',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@floating-ui/react-dom/dist'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@floating-ui/react-dom/dist'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@floating-ui/utils',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@floating-ui/utils/dist'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@floating-ui/utils/dist'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@jridgewell/resolve-uri',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@jridgewell/resolve-uri/dist'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@jridgewell/resolve-uri/dist'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@jridgewell/sourcemap-codec',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@jridgewell/sourcemap-codec/dist'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@jridgewell/sourcemap-codec/dist'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@radix-ui/react-menubar',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@radix-ui/react-menubar/dist'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@radix-ui/react-menubar/dist'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@radix-ui/react-navigation-menu',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@radix-ui/react-navigation-menu/dist'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@radix-ui/react-navigation-menu/dist'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@radix-ui/react-select',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@radix-ui/react-select/dist'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@radix-ui/react-select/dist'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/sharp',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/sharp/lib'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/sharp/lib'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/postcss',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/postcss/lib'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/postcss/lib'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/string-width-cjs/node_modules/emoji-regex',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/string-width-cjs/node_modules/emoji-regex/es2015'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/string-width-cjs/node_modules/emoji-regex/es2015'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/date-fns',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/date-fns'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/date-fns'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/memoizee',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/memoizee'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/memoizee'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@jridgewell/trace-mapping',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@jridgewell/trace-mapping'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@jridgewell/trace-mapping'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@radix-ui/react-accordion',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@radix-ui/react-accordion'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@radix-ui/react-accordion'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@radix-ui/react-alert-dialog',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@radix-ui/react-alert-dialog'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@radix-ui/react-alert-dialog'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@radix-ui/react-context-menu',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@radix-ui/react-context-menu'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@radix-ui/react-context-menu'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@radix-ui/react-dialog',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@radix-ui/react-dialog'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@radix-ui/react-dialog'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@radix-ui/react-dropdown-menu',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@radix-ui/react-dropdown-menu'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@radix-ui/react-dropdown-menu'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@radix-ui/react-scroll-area',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@radix-ui/react-scroll-area'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@radix-ui/react-scroll-area'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@radix-ui/react-toast',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@radix-ui/react-toast'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@radix-ui/react-toast'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@jridgewell',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@jridgewell/trace-mapping'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@jridgewell/trace-mapping'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@radix-ui',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@radix-ui/react-alert-dialog'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@radix-ui/react-alert-dialog'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@babel',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@babel/runtime/helpers'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@babel/runtime/helpers'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@floating-ui',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@floating-ui/core/dist'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@floating-ui/core/dist'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/drizzle-orm',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/drizzle-orm/sqlite-core/columns'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/drizzle-orm/sqlite-core/columns'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/embla-carousel',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/embla-carousel/cjs/components'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/embla-carousel/cjs/components'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/fast-equals',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/fast-equals/config/tsconfig'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/fast-equals/config/tsconfig'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/foreground-child',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/foreground-child/dist/commonjs'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/foreground-child/dist/commonjs'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/glob',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/glob/dist/commonjs'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/glob/dist/commonjs'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/minimatch',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/minimatch/dist/esm'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/minimatch/dist/esm'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/react-hook-form',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/react-hook-form/dist/logic'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/react-hook-form/dist/logic'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/use-callback-ref',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/use-callback-ref/dist/es2015'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/use-callback-ref/dist/es2015'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/use-sidecar',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/use-sidecar/dist/es2015'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/use-sidecar/dist/es2015'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/yaml',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/yaml/dist/nodes'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/yaml/dist/nodes'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/body-parser',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/body-parser/node_modules/debug'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/body-parser/node_modules/debug'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/finalhandler',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/finalhandler/node_modules/debug'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/finalhandler/node_modules/debug'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/express',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/express/node_modules/debug'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/express/node_modules/debug'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@nodelib/fs.stat',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@nodelib/fs.stat/out/providers'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@nodelib/fs.stat/out/providers'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@nodelib/fs.walk',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@nodelib/fs.walk/out/providers'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@nodelib/fs.walk/out/providers'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/fast-glob',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/fast-glob/out/readers'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/fast-glob/out/readers'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/path-scurry',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/path-scurry/dist/commonjs'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/path-scurry/dist/commonjs'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/express-session',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/express-session/node_modules/debug'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/express-session/node_modules/debug'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@pkgjs',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@pkgjs/parseargs'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@pkgjs/parseargs'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/d3-array',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/d3-array/src'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/d3-array/src'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/d3-interpolate',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/d3-interpolate/src'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/d3-interpolate/src'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/react-transition-group',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/react-transition-group/esm'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/react-transition-group/esm'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/tailwindcss',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/tailwindcss/lib'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/tailwindcss/lib'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/busboy',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/busboy'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/busboy'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/jackspeak',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/jackspeak'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/jackspeak'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/object-inspect',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/object-inspect'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/object-inspect'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/postcss-selector-parser',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/postcss-selector-parser'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/postcss-selector-parser'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@nodelib',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@nodelib/fs.scandir/out/providers'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@nodelib/fs.scandir/out/providers'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@tanstack',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@tanstack/query-core/build/legacy'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@tanstack/query-core/build/legacy'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/lucide-react',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/lucide-react/dist/esm/icons'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/lucide-react/dist/esm/icons'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/pg',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/pg/node_modules/pg-types/test'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/pg/node_modules/pg-types/test'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@hookform',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@hookform/resolvers'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@hookform/resolvers'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/send/node_modules',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/send/node_modules/debug'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/send/node_modules/debug'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/send',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/send/node_modules/debug'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/send/node_modules/debug'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/jose',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/jose/dist/webapi/jwe'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/jose/dist/webapi/jwe'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/victory-vendor',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/victory-vendor/lib-vendor/d3-shape/src'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/victory-vendor/lib-vendor/d3-shape/src'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/resolve',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/resolve/test/resolver/symlinked/_'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/resolve/test/resolver/symlinked/_'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/motion-dom',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/motion-dom/dist'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/motion-dom/dist'
+npm warn cleanup     }
+npm warn cleanup   ],
+npm warn cleanup   [
+npm warn cleanup     '/opt/tek-push-khas/node_modules/@tanstack/react-query',
+npm warn cleanup     [Error: ENOTEMPTY: directory not empty, rmdir '/opt/tek-push-khas/node_modules/@tanstack/react-query/build/codemods/src'] {
+npm warn cleanup       errno: -39,
+npm warn cleanup       code: 'ENOTEMPTY',
+npm warn cleanup       syscall: 'rmdir',
+npm warn cleanup       path: '/opt/tek-push-khas/node_modules/@tanstack/react-query/build/codemods/src'
+npm warn cleanup     }
+npm warn cleanup   ]
+npm warn cleanup ]
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/pg-protocol/src/testing/test-buffers.ts'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/opt/tek-push-khas/node_modules/iconv-lite/lib'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/es5-ext/array/#/contains.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/d3-shape/src/curve/linear.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/@nodelib/fs.walk/out/readers/sync.d.ts'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/type/plain-object/is.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/tailwindcss/src/util/color.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/opt/tek-push-khas/node_modules/react-day-picker/src/contexts'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/resolve/lib/homedir.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/es5-ext/object/copy-deep.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/dom-helpers/cjs/index.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/d3-shape/src/curve/linearClosed.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/opt/tek-push-khas/node_modules/date-fns/locale/_lib'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/fast-glob/out/utils/array.d.ts'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/@tanstack/query-core/build/modern/query.cjs'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/opt/tek-push-khas/node_modules/@jridgewell/trace-mapping/dist/types'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/@emnapi/runtime/dist/emnapi.cjs.min.d.ts'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/postcss/node_modules/nanoid/non-secure/index.d.ts'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/type/promise/is.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/tailwindcss/lib/util/colorNames.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/d3-shape/src/lineRadial.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/path-scurry/node_modules/lru-cache/dist/commonjs/index.js.map'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/opt/tek-push-khas/node_modules/react-day-picker/src/contexts'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/glob/dist/esm/index.js.map'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/dom-helpers/cjs/insertAfter.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/drizzle-orm/singlestore-core/columns/common.cjs'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/d3-shape/src/link.js'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/opt/tek-push-khas/node_modules/date-fns/locale/_lib'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/fast-glob/out/readers/async.d.ts'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, lstat '/opt/tek-push-khas/node_modules/@jridgewell/trace-mapping/dist/types'
+npm warn tar TAR_ENTRY_ERROR ENOENT: no such file or directory, open '/opt/tek-push-khas/node_modules/@emnapi/runtime/dist/emnapi.d.ts'
+npm error code EACCES
+npm error syscall mkdir
+npm error path /var/www/.npm
+npm error errno -13
+npm error
+npm error Your cache folder contains root-owned files, due to a bug in
+npm error previous versions of npm which has since been addressed.
+npm error
+npm error To permanently fix this problem, please run:
+npm error   sudo chown -R 33:33 "/var/www/.npm"
+npm notice
+npm notice New major version of npm available! 10.8.2 -> 11.4.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.4.2
+npm notice To update run: npm install -g npm@11.4.2
+npm notice
+npm error Log files were not written due to an error writing to the directory: /var/www/.npm/_logs
+npm error You can rerun the command with `--loglevel=verbose` to see the logs in your terminal
+root@bayat-ub22:~# 

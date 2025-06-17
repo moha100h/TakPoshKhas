@@ -58,17 +58,26 @@ complete_cleanup() {
     rm -f /etc/nginx/sites-enabled/${APP_NAME}
     rm -f /etc/nginx/sites-available/${APP_NAME}
     
-    # Remove application directory
-    rm -rf ${APP_DIR}
+    # Force remove application directory with all corrupted files
+    if [ -d "${APP_DIR}" ]; then
+        chmod -R 777 ${APP_DIR} 2>/dev/null || true
+        rm -rf ${APP_DIR}
+    fi
     
     # Database cleanup
     log_info "پاکسازی پایگاه داده..."
     sudo -u postgres psql -c "DROP DATABASE IF EXISTS ${DB_NAME};" 2>/dev/null || true
     sudo -u postgres psql -c "DROP USER IF EXISTS ${DB_USER};" 2>/dev/null || true
     
-    # Clean package caches
+    # Clean package caches and npm cache
     apt autoremove -y
     apt autoclean
+    npm cache clean --force 2>/dev/null || true
+    
+    # Clear any existing npm global cache
+    rm -rf /tmp/npm-* 2>/dev/null || true
+    rm -rf /root/.npm 2>/dev/null || true
+    rm -rf /home/*/.npm 2>/dev/null || true
     
     # Reload systemd
     systemctl daemon-reload
@@ -107,16 +116,42 @@ install_system_dependencies() {
 install_nodejs() {
     log_info "نصب Node.js 20 LTS..."
     
-    # Remove existing Node.js installations
-    apt remove -y nodejs npm 2>/dev/null || true
+    # Remove existing Node.js installations completely
+    apt remove -y nodejs npm nodejs-legacy 2>/dev/null || true
+    apt purge -y nodejs npm nodejs-legacy 2>/dev/null || true
+    apt autoremove -y
     
-    # Install Node.js 20 LTS
-    curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-    apt install -y nodejs
+    # Remove any leftover Node.js files
+    rm -rf /usr/local/bin/node /usr/local/bin/npm
+    rm -rf /usr/local/lib/node_modules
+    rm -rf /etc/apt/sources.list.d/nodesource.list*
+    
+    # Update package lists
+    apt update
+    
+    # Install Node.js 20 LTS with proper error handling
+    if ! curl -fsSL https://deb.nodesource.com/setup_20.x | bash -; then
+        error_exit "خطا در دانلود مخزن Node.js"
+    fi
+    
+    if ! apt install -y nodejs; then
+        error_exit "خطا در نصب Node.js"
+    fi
+    
+    # Configure npm for optimal performance
+    npm config set registry https://registry.npmjs.org/
+    npm config set fund false
+    npm config set audit false
+    npm config set update-notifier false
+    npm config set progress false
     
     # Verify installation
     local node_version=$(node --version)
     local npm_version=$(npm --version)
+    
+    if [[ -z "$node_version" || -z "$npm_version" ]]; then
+        error_exit "خطا در تأیید نصب Node.js"
+    fi
     
     log_success "Node.js ${node_version} و npm ${npm_version} نصب شدند"
 }
@@ -291,8 +326,40 @@ install_app_dependencies() {
     
     cd ${APP_DIR}
     
-    # Clean install dependencies
-    sudo -u www-data npm ci --only=production
+    # Fix file system permissions
+    chown -R www-data:www-data ${APP_DIR}
+    chmod -R 755 ${APP_DIR}
+    
+    # Remove corrupted node_modules if exists
+    rm -rf node_modules package-lock.json
+    
+    # Clear npm cache completely
+    npm cache clean --force 2>/dev/null || true
+    sudo -u www-data npm cache clean --force 2>/dev/null || true
+    
+    # Configure npm for production
+    sudo -u www-data npm config set fund false
+    sudo -u www-data npm config set audit false
+    sudo -u www-data npm config set progress false
+    sudo -u www-data npm config set loglevel error
+    
+    # Install dependencies with proper error handling
+    log_info "دانلود وابستگی‌ها..."
+    if ! sudo -u www-data npm install --only=production --no-optional --no-fund --no-audit --prefer-offline; then
+        log_warning "نصب اول ناموفق، تلاش مجدد با پاکسازی کش..."
+        
+        # Complete cleanup and retry
+        rm -rf node_modules
+        sudo -u www-data npm cache verify
+        
+        # Retry with fresh cache
+        sudo -u www-data npm install --only=production --no-optional --no-fund --no-audit --force
+    fi
+    
+    # Fix any permission issues after install
+    chown -R www-data:www-data ${APP_DIR}
+    find ${APP_DIR}/node_modules -type d -exec chmod 755 {} \; 2>/dev/null || true
+    find ${APP_DIR}/node_modules -type f -exec chmod 644 {} \; 2>/dev/null || true
     
     log_success "وابستگی‌های اپلیکیشن نصب شدند"
 }
@@ -771,28 +838,86 @@ configure_firewall() {
     log_success "فایروال تنظیم شد"
 }
 
+# System optimization for production
+optimize_system() {
+    log_info "بهینه‌سازی سیستم برای تولید..."
+    
+    # Increase file limits for Node.js
+    cat >> /etc/security/limits.conf << EOF
+www-data soft nofile 65536
+www-data hard nofile 65536
+www-data soft nproc 32768
+www-data hard nproc 32768
+EOF
+
+    # Optimize sysctl for high performance
+    cat >> /etc/sysctl.conf << EOF
+# Network optimizations
+net.core.somaxconn = 65535
+net.core.netdev_max_backlog = 5000
+net.ipv4.tcp_max_syn_backlog = 65535
+net.ipv4.tcp_keepalive_time = 600
+net.ipv4.tcp_keepalive_intvl = 60
+net.ipv4.tcp_keepalive_probes = 3
+
+# File system optimizations
+fs.file-max = 2097152
+vm.swappiness = 10
+EOF
+
+    sysctl -p
+    
+    log_success "سیستم بهینه‌سازی شد"
+}
+
 # Test server functionality
 test_server() {
     log_info "تست عملکرد سرور..."
     
     cd ${APP_DIR}
     
-    # Test server startup
-    sudo -u www-data NODE_ENV=production DATABASE_URL="postgresql://${DB_USER}:${DB_PASS}@localhost:5432/${DB_NAME}" node dist/server/index.js &
+    # Verify all required files exist
+    if [ ! -f "dist/server/index.js" ]; then
+        log_error "فایل سرور یافت نشد"
+        return 1
+    fi
+    
+    # Test database connection first
+    if ! PGPASSWORD=${DB_PASS} psql -h localhost -U ${DB_USER} -d ${DB_NAME} -c "SELECT 1;" > /dev/null 2>&1; then
+        log_error "اتصال به پایگاه داده ناموفق"
+        return 1
+    fi
+    
+    # Test server startup with timeout
+    timeout 30 sudo -u www-data NODE_ENV=production DATABASE_URL="postgresql://${DB_USER}:${DB_PASS}@localhost:5432/${DB_NAME}" node dist/server/index.js &
     local server_pid=$!
     
     # Wait for server to start
-    sleep 5
+    local max_attempts=10
+    local attempt=1
     
-    # Test health endpoint
-    if curl -f http://localhost:5000/api/health > /dev/null 2>&1; then
-        log_success "تست سرور موفق بود"
-        kill ${server_pid}
+    while [ $attempt -le $max_attempts ]; do
+        if curl -f http://localhost:5000/api/health > /dev/null 2>&1; then
+            log_success "تست سرور موفق بود"
+            kill ${server_pid} 2>/dev/null || true
+            return 0
+        fi
+        
+        sleep 2
+        attempt=$((attempt + 1))
+    done
+    
+    log_error "تست سرور ناموفق بود"
+    kill ${server_pid} 2>/dev/null || true
+    
+    # Show error logs for debugging
+    if systemctl is-active --quiet postgresql; then
+        log_info "پایگاه داده فعال است"
     else
-        log_error "تست سرور ناموفق بود"
-        kill ${server_pid} 2>/dev/null || true
-        return 1
+        log_error "پایگاه داده غیرفعال است"
     fi
+    
+    return 1
 }
 
 # Start all services
@@ -907,6 +1032,7 @@ main() {
     install_app_dependencies
     create_production_server
     create_directories
+    optimize_system
     create_systemd_service
     configure_nginx
     configure_firewall
