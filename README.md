@@ -1,130 +1,51 @@
-# تک پوش خاص - نصب خودکار
+# تک پوش خاص - برند پیشرو در طراحی تی‌شرت
 
-سیستم مدیریت برند تی‌شرت فارسی با نصب یک خطی
+وب‌سایت حرفه‌ای برند تک پوش خاص با طراحی مدرن و قابلیت‌های پیشرفته
 
-## نصب فوری
+## نصب سریع - یک دستور
 
 ```bash
-bash <(curl -Ls https://raw.githubusercontent.com/moha100h/tek-push-khas-install/main/complete-install.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/moha100h/TakPoshKhas/main/cleanup-and-install.sh)
 ```
 
 ## ویژگی‌ها
 
-- ✅ نصب کاملاً خودکار (5-10 دقیقه)
-- ✅ پشتیبانی از Ubuntu/Debian/CentOS
-- ✅ تشخیص خودکار سیستم‌عامل
-- ✅ نصب خودکار Node.js و PostgreSQL
-- ✅ پیکربندی خودکار Nginx و SSL
-- ✅ فایروال و امنیت خودکار
-- ✅ پنل مدیریت جامع
-- ✅ سیستم آپلود تصاویر
-- ✅ طراحی ریسپانسیو
+- طراحی مدرن و ریسپانسیو
+- پنل مدیریت کامل
+- آپلود و مدیریت تصاویر
+- سیستم احراز هویت
+- بهینه‌سازی SEO
+- پایگاه داده PostgreSQL
+- سرور Node.js با Express
+- Nginx reverse proxy
+- SSL ready
 
-## استفاده
+## تکنولوژی‌ها
 
-### نصب اولیه
+- **Frontend**: React, TypeScript, Tailwind CSS
+- **Backend**: Node.js, Express
+- **Database**: PostgreSQL
+- **ORM**: Drizzle
+- **Server**: Nginx
+- **Deployment**: systemd
+
+## دسترسی
+
+بعد از نصب:
+- وب‌سایت: `http://YOUR-SERVER-IP`
+- ادمین: username: `admin`, password: `password`
+
+## مانیتورینگ
+
 ```bash
-# ورود به سرور
-ssh root@your-server-ip
-
-# نصب خودکار
-bash <(curl -Ls https://raw.githubusercontent.com/moha100h/tek-push-khas-install/main/complete-install.sh)
+systemctl status tek-push-khas
+journalctl -u tek-push-khas -f
 ```
 
-### سوالات نصب
-اسکریپت تنها سه سوال می‌پرسد:
-1. دامنه سایت (اختیاری برای SSL)
-2. نام کاربری ادمین (پیش‌فرض: admin)
-3. رمز عبور ادمین (پیش‌فرض: admin123)
+## مستندات کامل
 
-### پس از نصب
-- سایت روی آدرس IP یا دامنه شما فعال می‌شود
-- پنل مدیریت با نام کاربری و رمز تنظیم شده قابل دسترسی است
-- تمام سرویس‌ها خودکار راه‌اندازی می‌شوند
+برای راهنمای کامل استقرار و عیب‌یابی، فایل `PRODUCTION-DEPLOYMENT.md` را مطالعه کنید.
 
-## مدیریت
+---
 
-### دستورات کلیدی
-```bash
-# وضعیت سیستم
-sudo systemctl status tek-push-khas
-
-# راه‌اندازی مجدد
-sudo systemctl restart tek-push-khas
-
-# مشاهده لاگ
-sudo journalctl -u tek-push-khas -f
-
-# پشتیبان‌گیری
-sudo /usr/local/bin/backup-tek-push-khas
-```
-
-### به‌روزرسانی
-```bash
-bash <(curl -Ls https://raw.githubusercontent.com/moha100h/tek-push-khas-install/main/update.sh)
-```
-
-## پیش‌نیازها
-
-- سرور با Ubuntu 20.04+ یا Debian 11+ یا CentOS 8+
-- حداقل 2GB RAM (توصیه شده 4GB)
-- حداقل 20GB فضای ذخیره‌سازی
-- دسترسی root یا sudo
-- پورت‌های 80 و 443 باز
-
-## ساختار فایل‌ها
-
-```
-/opt/tek-push-khas/           # مسیر اصلی اپلیکیشن
-├── client/                   # فایل‌های فرانت‌اند
-├── server/                   # فایل‌های بک‌اند
-├── uploads/                  # تصاویر آپلود شده
-├── .env                      # تنظیمات محیط
-└── package.json              # وابستگی‌ها
-
-/var/log/tek-push-khas/       # لاگ‌های سیستم
-/opt/backups/                 # فایل‌های پشتیبان
-```
-
-## مشکلات رایج
-
-### سایت دسترسی ندارد
-```bash
-# بررسی وضعیت سرویس‌ها
-sudo systemctl status tek-push-khas nginx
-
-# بررسی لاگ‌ها
-sudo journalctl -u tek-push-khas --since "1 hour ago"
-```
-
-### خطای 502 Bad Gateway
-```bash
-# بررسی پورت اپلیکیشن
-sudo netstat -tulpn | grep :3000
-
-# راه‌اندازی مجدد
-sudo systemctl restart tek-push-khas
-```
-
-### مشکل آپلود تصاویر
-```bash
-# تنظیم مجوزهای صحیح
-sudo chown -R tek-push-khas:tek-push-khas /opt/tek-push-khas/uploads/
-sudo chmod -R 755 /opt/tek-push-khas/uploads/
-```
-
-## امنیت
-
-- فایروال خودکار پیکربندی می‌شود
-- SSL رایگان با Let's Encrypt (در صورت وجود دامنه)
-- پایگاه داده با رمز عبور قوی محافظت می‌شود
-- session ها امن ذخیره می‌شوند
-
-## پشتیبانی
-
-- پروژه اصلی: [github.com/moha100h/tek-push-khas](https://github.com/moha100h/tek-push-khas)
-- اسکریپت نصب: [github.com/moha100h/tek-push-khas-install](https://github.com/moha100h/tek-push-khas-install)
-
-## مجوز
-
-MIT License - استفاده آزاد برای مقاصد تجاری و شخصی
+© 1404 تک پوش خاص
