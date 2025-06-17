@@ -18,7 +18,7 @@ import {
   type AboutContent,
   type InsertAboutContent,
 } from "@shared/schema";
-import { db } from "./db.js";
+import { db } from "./db";
 import { eq, and } from "drizzle-orm";
 
 // Interface for storage operations
